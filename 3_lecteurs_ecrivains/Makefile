@@ -22,5 +22,5 @@ plot: test
 
 clean:
 	rm -f compiled/*
-	rm -rf compiled
+	
 all: clean plot
