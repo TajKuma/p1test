@@ -13,7 +13,7 @@ df["TOTAL_THREADS"] = df["Lecteurs"] + df["Ecrivains"]
 # Calcul statistiques
 stats = df.groupby("TOTAL_THREADS")["Temps(s)"].agg(["mean", "std"]).reset_index()
 
-# Tracé
+#graphique
 plt.figure(figsize=(8, 6))
 plt.errorbar(
     stats["TOTAL_THREADS"],
