@@ -32,7 +32,6 @@ void *lecteur(void *arg) {
 
         // ---- ZONE CRITIQUE ----
         for(int i = 0; i < 10000; i++); // Simulation de lecture
-        int valeur_lue = base_de_donnees;
         // ------------------------
 
         // Sortie lecteur
