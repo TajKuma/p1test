@@ -16,8 +16,6 @@ N_MEASURES=5
 
 for N in $TOTAL_THREADS_LIST; do
     for i in $(seq 1 $N_MEASURES); do
-        echo "Running N=$N mesure $i..."
-
         # Mesure du temps réel en secondes avec précision maximale POSIX
         /usr/bin/time -f "%e" -o tmp.time "$BINARY" "$N" >/dev/null
 
@@ -29,5 +27,3 @@ for N in $TOTAL_THREADS_LIST; do
 done
 
 rm -f tmp.time
-
-echo "Mesures terminées. Résultats dans $OUTPUT"

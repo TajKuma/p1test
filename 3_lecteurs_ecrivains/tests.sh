@@ -20,8 +20,6 @@ for TOTAL in $TOTAL_THREADS_LIST; do
     E=$((TOTAL / 2))
 
     for i in $(seq 1 $N_MEASURES); do
-        echo "Running TOTAL=$TOTAL (L=$L E=$E) mesure $i..."
-
         # Mesure du temps réel
         /usr/bin/time -f "%e" -o tmp.time "$BINARY" "$L" "$E" >/dev/null
 
@@ -33,5 +31,3 @@ for TOTAL in $TOTAL_THREADS_LIST; do
 done
 
 rm -f tmp.time
-
-echo "Mesures terminées. Résultats dans $OUTPUT"

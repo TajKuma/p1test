@@ -6,8 +6,7 @@ all: sol test plot
 
 sol: philo_sol prod_sol lect_sol
 
-test:
-	bash ./experiments.sh
+test: philo_test prod_test lect_test
 
 plot:
 	./1_philosophes/plot.py
