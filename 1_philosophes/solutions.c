@@ -3,7 +3,7 @@
 #include <pthread.h>
 
 // Création de variables
-#define CYCLES 100000
+#define CYCLES 1000000
 pthread_mutex_t *forks;
 int N;
 
@@ -67,6 +67,6 @@ int main(int argc, char *argv[]){
     free(threads);
     free(ids);
 
-    printf("Les %d philosophes ont termine leurs %d cycles.\n", N, CYCLES);
+    //printf("Les %d philosophes ont termine leurs %d cycles.\n", N, CYCLES);
     return 0;
 }

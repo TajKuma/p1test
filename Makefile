@@ -2,7 +2,17 @@
 .PHONY: philo_sol philo_test philo_plot philo_clean
 
 # Run philo & prod/cons & lect/ecriv
-all: philo_all prod_all lect_all
+all: sol test plot
+
+sol: philo_sol prod_sol lect_sol
+
+test:
+	bash ./experiments.sh
+
+plot:
+	./1_philosophes/plot.py
+	./2_producteurs_consommateurs/plot.py
+	./3_lecteurs_ecrivains/plot.py
 
 clean: philo_clean prod_clean lect_clean
 

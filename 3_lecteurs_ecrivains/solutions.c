@@ -30,8 +30,7 @@ void *lecteur(void *arg) {
 
         //critique
         for(int i = 0; i < 10000; i++); //lecture simulee
-        int valeur_lue = base_de_donnees;
-
+        
         //sortie lecteur
         pthread_mutex_lock(&mutex);
         nb_lecteurs--;
@@ -97,7 +96,7 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i < E; i++)
         pthread_join(ecrivains[i], NULL);
 
-    printf("Valeur finale de la base de données = %d\n", base_de_donnees);
+    //printf("Valeur finale de la base de données = %d\n", base_de_donnees);
 
     return 0;
 }

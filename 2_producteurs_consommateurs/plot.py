@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Récupération du csv
-df = pd.read_csv("./compiled/results.csv")
+script_dir = os.path.dirname(os.path.abspath(__file__))
+compiled_dir = os.path.join(script_dir, "compiled")
+csv_path = os.path.join(compiled_dir, "results.csv")
+
+df = pd.read_csv(csv_path)
 
 # nbr de threads
 df["TOTAL_THREADS"] = df["P"] + df["C"]
@@ -31,4 +36,5 @@ plt.ylim(bottom=0)
 plt.xticks(stats["TOTAL_THREADS"])
 plt.grid(True)
 plt.legend()
-plt.savefig("compiled/graph.pdf")
+graph_path = os.path.join(compiled_dir, "graph.pdf")
+plt.savefig(graph_path)

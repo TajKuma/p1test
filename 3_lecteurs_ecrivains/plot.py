@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-CSV_FILE = "./compiled/results.csv"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+compiled_dir = os.path.join(script_dir, "compiled")
+csv_path = os.path.join(compiled_dir, "results.csv")
 
-# Lire le CSV
-df = pd.read_csv(CSV_FILE)
+df = pd.read_csv(csv_path)
 
-# Nombre total de threads (lecteurs + écrivains)
+#nbr threads (lecteurs + écrivains)
 df["TOTAL_THREADS"] = df["Lecteurs"] + df["Ecrivains"]
 
-# Calcul statistiques
+#calculs statistiques
 stats = df.groupby("TOTAL_THREADS")["Temps(s)"].agg(["mean", "std"]).reset_index()
 
 #graphique
@@ -32,4 +34,5 @@ plt.grid(True)
 plt.xticks(stats["TOTAL_THREADS"])
 plt.legend()
 
-plt.savefig("compiled/graph.pdf")
+graph_path = os.path.join(compiled_dir, "graph.pdf")
+plt.savefig(graph_path)
