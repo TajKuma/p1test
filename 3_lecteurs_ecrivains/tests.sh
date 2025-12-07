@@ -1,43 +1,34 @@
 #!/bin/bash
+set -euo pipefail
 
-# Ce script mesure les performances du programme lecteurs/écrivains
-# en variant le nombre TOTAL de threads : 2, 4, 8, 16, 32
-# Les threads lecteurs et écrivains sont répartis équitablement.
+BINARY="./compiled/solutions"
+OUTPUT="./compiled/results.csv"
 
-PROGRAMME="./lecteurs_ecrivains"   # Nom de l'exécutable à tester
-CSV="resultats_perf.csv"            # Fichier CSV de sortie
+# En-tête CSV adapté aux lecteurs/écrivains
+echo "Lecteurs,Ecrivains,Temps(s)" > $OUTPUT
 
-# En-tête du CSV
-echo "threads_total,lecteurs,ecrivains,essai,temps_sec" > "$CSV"
+# Nombres totaux de threads à tester
+TOTAL_THREADS_LIST="2 4 8 16 32"
+N_MEASURES=5
 
-# Liste des valeurs du nombre total de threads
-THREADS_LIST="2 4 8 16 32"
+for TOTAL in $TOTAL_THREADS_LIST; do
+    # Répartir en lecteurs et écrivains
+    L=$((TOTAL / 2))
+    E=$((TOTAL / 2))
 
-for total in $THREADS_LIST; do
+    for i in $(seq 1 $N_MEASURES); do
+        echo "Running TOTAL=$TOTAL (L=$L E=$E) mesure $i..."
 
-    # Répartition équitable
-    lecteurs=$((total / 2))
-    ecrivains=$((total / 2))
+        # Mesure du temps réel
+        /usr/bin/time -f "%e" -o tmp.time "$BINARY" "$L" "$E" >/dev/null
 
-    for essai in $(seq 1 5); do
+        TIME=$(cat tmp.time)
 
-        tmpfile=$(mktemp)
-
-        # Exécution silencieuse avec mesure du temps réel
-        /usr/bin/time -f "%e" -o "$tmpfile" $PROGRAMME $lecteurs $ecrivains > /dev/null 2>&1
-
-        temps=$(cat "$tmpfile")
-
-        if [[ -z "$temps" ]]; then
-            temps="NaN"
-        fi
-
-        echo "$total,$lecteurs,$ecrivains,$essai,$temps" >> "$CSV"
-
-        rm -f "$tmpfile"
-
+        # Ajout des données
+        echo "$L,$E,$TIME" >> $OUTPUT
     done
-
 done
 
-echo "Mesures terminées. Résultats dans $CSV"
+rm -f tmp.time
+
+echo "Mesures terminées. Résultats dans $OUTPUT"

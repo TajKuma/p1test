@@ -2,29 +2,25 @@ CC = gcc
 CFLAGS = -O2 -std=c11 -Wall -Wextra -pthread
 TARGET = compiled/solutions
 BUILD_DIR = compiled
-N ?= 5  # valeur par défaut de N
+P ?= 2
+C ?= 2
 
-.PHONY: all sol clean test plot dirs
+.PHONY: sol test plot all clean
 
-# Compiler et lancer avec N philosophes
 sol: $(TARGET)
-	$(TARGET) $(N)
+	$(TARGET) $(P) $(C)
 
-# Compiler l’exécutable
 $(TARGET): solutions.c
+	mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $(TARGET) solutions.c -lm
 
-# Lancer tous les tests → results.csv dans compiled/
 test: $(TARGET)
-	./tests.sh
+	bash ./tests.sh
 
-# Générer graph.pdf dans compiled/
 plot: test
-	python plot.py compiled/results.csv compiled/graph.pdf
+	./plot.py
 
-# Nettoyer folder compiled/
 clean:
 	rm -f compiled/*
-
-# Tout en une commande
-all: clean sol test plot
+	rm -rf compiled
+all: clean plot
