@@ -1,11 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-DIR="$(dirname "$0")"
-BINARY="$DIR/compiled/solutions"
-OUTPUT="$DIR/compiled/results.csv"
-
-mkdir -p "$DIR/compiled"
+BINARY="./compiled/solutions"    
+OUTPUT="./compiled/results.csv"
 
 # En-tête CSV
 echo "N,Temps(s)" > "$OUTPUT"

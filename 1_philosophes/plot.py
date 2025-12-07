@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
-import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Récupération du csv
-script_dir = os.path.dirname(os.path.abspath(__file__))
-compiled_dir = os.path.join(script_dir, "compiled")
-csv_path = os.path.join(compiled_dir, "results.csv")
-
-df = pd.read_csv(csv_path)
+df = pd.read_csv("./compiled/results.csv")
 
 # moyenne et l'écart-type
 stats = df.groupby("N")["Temps(s)"].agg(["mean", "std"]).reset_index()
@@ -33,5 +28,4 @@ plt.ylim(bottom=0)
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend()
 plt.tight_layout()
-graph_path = os.path.join(compiled_dir, "graph.pdf")
-plt.savefig(graph_path)
+plt.savefig("compiled/graph.pdf")
